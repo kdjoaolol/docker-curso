@@ -6,6 +6,7 @@ FROM alpine:$TAG
 
 # variaveis presentes apenas durante o build, podemos definir valor default ou passamos quando colocar o docker build 
 # ARG CONTAINER_NAME OU colocando o = (que é o default)
+# ARG nao estara dentro da imagem, diferente de ENV
 ARG CONTAINER_NAME_ARG=Container-A
 
 # cria uma variavel de ambiente e ficará presente na imagem final, diferente do ARG e nao pode ser configurado no momento do build
