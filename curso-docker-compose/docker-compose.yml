@@ -1,0 +1,29 @@
+services:
+  mysql: # aqui eu coloco o nome que eu quiser
+    image: mysql:8.0
+    command: '--default-authentication-plugin=mysql_native_password' # aqui aplicamos os codigos cmd/shell 
+    container_name: mysql-curso
+    environment:
+      - MYSQL_ROOT_PASSWORD=abc123
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=def456
+    expose: # porta que vamos expor do serviço
+      - 3306
+      - 33060
+    ports:
+      - 3306:3306
+    restart: always # se o container der BO, ele sempre reinicia
+
+  wordpress:
+    depends_on: # primeiro rodar mysql e depois que finalizar, rodar o wordpress
+      - mysql
+    image: wordpress:6.1.1
+    environment:
+      - WORDPRESS_DB_HOST=mysql
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=def456
+      - WORDPRESS_DB_NAME=wordpress
+    ports: # diferente do expose, aqui é a porta para o meu host verificar enquanto o expose é a porta do container libera
+      - 9000:80 
+    restart: always # se o container der BO, ele sempre reinicia
